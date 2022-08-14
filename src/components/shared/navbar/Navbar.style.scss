@@ -1,0 +1,63 @@
+.navbar {
+    display: flex;
+    position: fixed;
+    background: #374f60;
+    height: 60px;
+    width: 100%;
+    top: 100px;
+    right: 0;
+    left: 0;
+    z-index: 5;
+    box-shadow: 0px 0px 30px black;
+    // justify-content:space-between;
+    align-items: center;
+    overflow: auto;
+    flex-wrap: wrap;
+
+    ul{
+        // width: 100%;
+        height: 100%;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        vertical-align: middle;
+        
+    .active{
+            background: rgba(255, 255, 255, 0.18);
+            border-radius: 20px;
+        }
+
+    li{
+        padding: 0.25rem 1rem;
+        margin: auto 1rem;
+        font-size: 1.1rem;
+        width: max-content;
+        color: white;
+        display:inline-block ;
+        align-items: center;
+
+        &:hover{
+            cursor: pointer;
+        }
+
+        
+    }
+    }
+
+    /* width */
+    &::-webkit-scrollbar {
+        height: 8px;
+    }
+
+    /* Track */
+    &::-webkit-scrollbar-track {
+        background: transparent;
+    }
+
+    /* Handle */
+    &::-webkit-scrollbar-thumb {
+        background: rgb(142, 142, 142);
+        border-radius: 10px;
+    }
+
+}

@@ -1,0 +1,155 @@
+@mixin media-helf() {
+    @media (min-width: 750px) {
+        @content;
+    }
+}
+
+@mixin media-third() {
+    @media (min-width: 1030px) {
+        @content;
+    }
+}
+
+.title_table{
+        background: #c4e1e680;      
+        padding:0rem 0.5rem;
+        display: flex;
+        width: 100%; 
+        align-items: center;
+        justify-content: space-between;
+       
+       label{
+        font-weight: 400;
+        font-size: 0.95rem;
+        
+        width: 12%;
+        text-align: center;
+        
+        &:first-child{
+            width: 20%;
+            text-align: start;
+        }
+
+        &:hover{
+            cursor: pointer;
+        }
+       }
+
+    }
+
+.table-component{
+    height: 300px;
+    // overflow: hidden;
+    position: relative;
+}
+
+.table-container{
+     position: relative; 
+     height: 55%; 
+     width: 100%;
+    overflow-y: scroll;
+    //overflow-x: hidden;
+
+    @include media-helf(){
+        height: 65%;
+        overflow-x: hidden;
+    }
+
+    @include media-third(){
+        height: 75%;
+    }
+}
+
+.table{
+    margin-bottom: 0.5rem;
+    border-collapse: collapse;
+    margin-right: 0.5rem;   
+   width: 100%;
+
+    tr{
+        // background: wheat;    
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+
+    }
+
+    td{
+        font-size: 0.9rem;
+        width: 10%;
+        text-align: start;
+        height: 50px;
+
+        &:first-child{
+            width: 5%;
+            font-weight: bold;
+
+            @include media-helf(){
+                width: 15%;
+            }
+
+            .td-content{
+                justify-content: right;
+            }
+        }
+    }
+}
+
+.td-content{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    direction: ltr;
+
+}
+
+.base-score{
+     color:rgb(47, 46, 46);
+    font-weight: bold;
+    border-radius: 3px;
+    padding: 0.3rem;
+}
+
+.red{
+    @extend .base-score;
+    background: rgb(243, 142, 142);
+   
+}
+
+.yellow {
+    @extend .base-score;
+    background: rgb(253, 253, 110);
+}
+
+.orange {
+    @extend .base-score;
+    background: rgb(246, 201, 123);
+}
+
+.green {
+    @extend .base-score;
+    background: rgb(159, 226, 159);
+}
+
+.blue {
+    @extend .base-score;
+    background: rgb(93, 236, 255);
+}
+
+.percent-block{
+    background: #d1d5f280;
+    height: 13px;
+    margin-left :3px;
+    width: 40px;
+    display: inline-block;
+    border-radius: 3px;
+    text-align: start;
+    vertical-align:middle;
+
+    .percent-fill{
+        display: inline-block;
+        height: 11px;
+        position: relative;
+        top: -5px;
+    }
+
+}
+
