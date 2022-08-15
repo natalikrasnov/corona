@@ -13,6 +13,7 @@
     .card_header{
         display: flex;
         width: 100%;
+        padding: 1rem;
     }
 
     .info{
@@ -20,7 +21,6 @@
         display: flex;
         
         .info_img{
-            margin: 1rem;
             color: white;
             background: #374f60;
             border-radius: 50%;
@@ -43,8 +43,8 @@
             box-shadow: 0 0 5px 0 black;
             border: solid 1px black;
             width: 300px;
-            top: 40px;
-            right: 0;
+            top: 25px;
+            right: -20px;
             z-index: 100;
             padding: 0.2rem;
             font-size: 0.8rem;
@@ -53,26 +53,22 @@
     }
    
     .card_title{
-        padding: 1rem;
-        min-width: 20%;
+        padding-left: 0.5rem;
+        min-width: max-content;
     }
 
     .menu{
         text-align: end;
-        width: 80%;
-        margin-left: 1rem;
-        margin-top: 1rem;
-        font-size: 2rem;
+        width: 100%;
+        font-size: 1.7rem;
         font-weight: bold;
-        cursor: pointer;
 
         a{
-            color: black !important;
+            color: black !important;        
+            cursor: pointer;
         }
-        
 
         .menu-functions{
-            display: none;
                 position: absolute;
                 background: #24252dc3;
                 width: 70px;
@@ -86,5 +82,36 @@
         .show-menu{
             display: flex;
         }
+    }
+
+    .filter{
+        margin: 0.5rem;
+
+        input{
+            background: #ffffff1c;
+            border: 1px solid white;
+            border-radius: 50px;
+            padding: 0.4rem 0.5rem;
+            font-size: 1rem;
+            color: white;
+            
+            &::placeholder{
+                color: white;
+            }
+        }
+
+        datalist{
+            option{
+                background: #374f60;
+
+            }
+
+            .datalist-buttons{
+                position:fixed;
+
+            }  
+        }
+        
+
     }
 }

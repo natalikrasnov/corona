@@ -4,11 +4,28 @@ import './Card.style.scss'
 function Card({title, info, isShowMenu, shareFunction, downloadFunction, filter, children}) {
 
   const [isMenuOpen, setIsMenuOpen] = useState(false)
-  
-  const getFilterComponent = () => {
+
+  const GetFilterComponent = () => {
     switch (filter.type) {
       case 'select': 
-        return <select onChange={filter.onChange}> </select>
+        return <input type="select" onChange={filter.updateFilter}> </input>
+      case 'input':
+        console.log("filter object=> ",filter)
+        return (
+          <div>
+            <input type="text" name="city" list="citynames" placeholder='כלל הישובים' onInput={filter.updateFilter}/>
+            <div>
+            <datalist id="citynames">
+              {filter.data.map((el,i) => <option key={i}  value={el.city}></option>)}
+                <div className='datalist-buttons'>
+                  <button > אישור</button>
+                  <button > ביטול</button>
+                </div>
+              </datalist>
+             
+            </div>
+          </div>
+        )
     }
   }
 
@@ -23,15 +40,15 @@ function Card({title, info, isShowMenu, shareFunction, downloadFunction, filter,
             </div>
       </div>}
       {isShowMenu && <div className='menu'>
-        <a className='menu_button'>&#8285;</a>
-        <div className='menu-functions'>
+        <a className='menu_button' onClick={()=> setIsMenuOpen(!isMenuOpen)}>&#8285;</a>
+        {isMenuOpen && <div className='menu-functions'>
           <a onClick={shareFunction}>share</a>
           <a onClick={downloadFunction}>download</a>
-        </div>
+        </div>}
         </div>}
       </div>  
       {filter && <div className='filter'>
-        {getFilterComponent}
+        <GetFilterComponent />
       </div>}
 
       {children}

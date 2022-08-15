@@ -10,7 +10,8 @@ export const sortDataAction = (titleIndex,isFromStart ) => ({
 
 export const filterDataAction = (filter) => ({
   type: "FILTER_DATA",
-  filter,
+  filter: filter.filterData,
+  filterBy: filter.filterBy,
 });
 
 export const initDataAction = (data) => ({

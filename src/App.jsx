@@ -5,7 +5,7 @@ import MainDisplay from './components/shared/main/MainDisplay.component'
 import Navbar from './components/shared/navbar/Navbar.component'
 
 function App() {
-  const [activeComponent, setActiveComponent] = useState(0)
+  // const [activeComponent, setActiveComponent] = useState(0)
 
   const [activeTopic, setActiveTopic] = useState(0)
   const [isDarkMode, setIsDarkMode] = useState(true)
@@ -14,9 +14,9 @@ function App() {
     setActiveTopic(index)
   }
 
-  const activateComponent = (index) => {
-    setActiveComponent(index)
-  }
+  // const activateComponent = (index) => {
+  //   setActiveComponent(index)
+  // }
 
   
   const setDarkMode = () => {
@@ -26,8 +26,8 @@ function App() {
   return (
     <div className="App">
       <Header setDarkMode={setDarkMode} isDarkMode={ isDarkMode} />
-      <Navbar active={activeTopic} activateTopic={ activateComponent} />
-      <MainDisplay active={activeComponent} activateTopic={activateTopic} isDarkMode={ isDarkMode} />
+      <Navbar active={activeTopic} activateTopic={ activateTopic} />
+      <MainDisplay active={activeTopic} activateTopic={activateTopic} isDarkMode={ isDarkMode} />
     </div>
   )
 }

@@ -2,14 +2,17 @@ import { useReducer, useEffect } from 'react'
 import './Table.style.scss'
 
 import tableDataReducer, { initialTableDataState } from '../../reducers/TableData.reducer'
-import { initDataAction, sortDataAction } from '../../actions/TableData.action'
+import { initDataAction, sortDataAction , filterDataAction} from '../../actions/TableData.action'
 
 function Table({ data, notIndex, filter, backgroundStyle, displayPercent }) {
 
   const [tableData, dispatchTableData] = useReducer(tableDataReducer, initialTableDataState)
-
+  
   useEffect(() => dispatchTableData(initDataAction(data)) , []) 
-
+  useEffect(() => dispatchTableData(filterDataAction(filter)), [filter])
+  
+  useEffect(()=> console.log("tabelData Change (debug)", tableData), [tableData])
+ 
   const getStyle = (index, object) => {
     if (backgroundStyle && backgroundStyle.index && backgroundStyle.index.includes(index)) {
       const color = backgroundStyle.getColor(object)
@@ -22,25 +25,15 @@ function Table({ data, notIndex, filter, backgroundStyle, displayPercent }) {
   const isPercent = (value, i) =>
       displayPercent && displayPercent.includes(i) && !(/[^(\d+)$.]+/g.test(value))
   
-  return (
-  <div className='table-component'>
-    <div className= "title_table">
-        {tableData && Object.values(tableData[0]).map((value, index) =>  !notIndex.includes(index) && (
-          <label key={index} onClick={()=>doSort(index)}>{value}</label>
-        ))}
-      </div>
-  <div className='table-container'>
-    <table className='table'>
-    
-      <tbody>
-      {tableData && tableData.map((title, index) => 
+  const GetTable = ({ initialData }) => {
+    return initialData.map((title, index) => 
         index > 0 && (
           <tr key={index}>
-            {Object.values(tableData[index]).map((value, i) =>  !notIndex.includes(i) && (
+            {Object.values(initialData[index]).map((value, i) =>  !notIndex.includes(i) && (
               <td key={i}>
                 <div className='td-content'>
-                  <span className={getStyle(i, tableData[index])}>
-                    {index === 9 && tableData[index]["__EMPTY_4"] && console.log(tableData[index]["__EMPTY_4"])}
+                  <span className={getStyle(i, initialData[index])}>
+                    {index === 9 && initialData[index]["__EMPTY_4"] && console.log(initialData[index]["__EMPTY_4"])}
                     {value}
                   </span>
                     
@@ -61,7 +54,21 @@ function Table({ data, notIndex, filter, backgroundStyle, displayPercent }) {
             ))}
           </tr>
         )
-          )}
+          )
+  }
+
+  return (
+  <div className='table-component'>
+    <div className= "title_table">
+        {tableData && Object.values(tableData[0]).map((value, index) =>  !notIndex.includes(index) && (
+          <label key={index} onClick={()=>doSort(index)}>{value}</label>
+        ))}
+      </div>
+  <div className='table-container'>
+    <table className='table'>
+    
+      <tbody>
+      {tableData && <GetTable initialData={tableData.filtered? tableData.filtered : tableData}/>}
         </tbody>
         </table>
       </div>

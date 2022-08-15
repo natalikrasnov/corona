@@ -1,12 +1,36 @@
 import './graph.style.scss'
-import { VictoryBar, VictoryChart, VictoryAxis, VictoryTheme, VictoryStack, VictoryPortal, VictoryLabel } from 'victory';
+import { VictoryBar, VictoryChart, VictoryAxis,VictoryTooltip,VictoryScatter, VictoryVoronoiContainer, VictoryTheme, VictoryStack, VictoryPortal, VictoryLabel } from 'victory';
 
-function VictoryChartCustome({dataElements, xTitle, yTitle}) {
+//לשנות לבייס קומפונת שמקבל איזה סוג גרף ומעביר אליו נתונים שצריך. הצבעים והדיב הראשון של המפה הוא בבייס
+function VictoryChartCustome({dataElements, xTitle, yTitle, filterDate}) {
+    const colors = ["rgb(159, 226, 159)", "tomato", "rgb(93, 236, 255)", "purple" ]
+    
+    return ( 
+        <>
+            <div className='graph-map'>
+                {yTitle.map((title, index) => <div key={index } className='graph-map-item'>
+                    <div style={ {backgroundColor: colors[index]}}className="graph-map-item-color" ></div>
+                    <label>{title}</label>
+                </div>
+                )}
+            </div>
+            <VictoryChart height={300} width={300}
+            containerComponent={
+                <VictoryVoronoiContainer
+                    voronoiDimension="x"
+                    labels={({ datum }) => {
+                                return `${yTitle[datum._stack-1]}: ${datum[yTitle[datum._stack-1]]}`
 
-    return (
-        <VictoryChart height={200} width={400}
-        //   domainPadding={{ x: 20, y: 0 }}
-        >
+                            }}
+                    labelComponent={
+                    <VictoryTooltip
+                        cornerRadius={0}
+                        flyoutStyle={{ fill: "#374f60", color: 'white' }}
+                    />}
+                />
+            }
+        > 
+           
             <VictoryAxis
                  maxDomain={{ x: 5 }}
                 label={xTitle.split("_").join(" ")}
@@ -28,24 +52,15 @@ function VictoryChartCustome({dataElements, xTitle, yTitle}) {
                         tickLabels: { fill: "#FFFFFF", padding:30}
                 }}
             />
-            <VictoryAxis
-                    label={yTitle}
-                orientation="top"//"right"
-                
-                    // tickFormat={(x) => x>=1000 ? x/1000+"k": x}
-                    style={{
-                        axisLabel: { padding: 10, fill: "#FFFFFF", top: 0 , border: "none" },
-                        tickLabels: { fill: "none", padding:20}
-
-                }}
-            />
+            
             <VictoryStack
-                colorScale={["green", "tomato", "blue", "purple"]}
+                colorScale={colors}
                 
             >
                 {
-                    yTitle.map((ytitle, index) =>
-                        dataElements && dataElements.map((element, index) => (
+                    yTitle.map((ytitle, i) =>
+                        dataElements && dataElements.map((element, index) =>
+                        (
                             <VictoryBar
                                 //  horizontal
                                 key={index}
@@ -54,13 +69,18 @@ function VictoryChartCustome({dataElements, xTitle, yTitle}) {
                                 y={ytitle}    
                                 alignment="start"
                                 barRatio={1.0}
+                                style={{
+                                      labels: { fill: colors[i] }
+                                }}
                                 
                             />
+                            
                         ))
-                    )}
+                        )}
+                    
             </VictoryStack>
             
       </VictoryChart>
-    )
+   </> )
 }
 export default VictoryChartCustome

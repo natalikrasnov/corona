@@ -53,27 +53,14 @@ function MainDisplay({active, activateTopic, isDarkMode}) {
 
   const topicRef = useRef(null)
   const curTopicRef = Object.keys(MAIN_TOPICS).map(() => useRef(null))
-  const [visibleElements, setVisibleElements] = useState({})
+  // const [visibleElements, setVisibleElements] = useState({})
 
   const scrollToElement = (index) => topicRef.current.children[index].scrollIntoView();
   
   const onScroll = ([event]) => {
-    console.log(event.target.id)
-    if (event.isIntersecting) {
-      const newVisible = { ...visibleElements }
-      newVisible[event.target.id] =  Object.keys(MAIN_TOPICS).indexOf(event.target.id)
-      setVisibleElements(newVisible)
-
-      activateTopic(Object.keys(MAIN_TOPICS).indexOf(event.target.id))
-
-      console.log("after add ", newVisible) 
-    } else {
-
-      const newVisible = { ...visibleElements }
-      delete newVisible[event.target.id]
-      setVisibleElements(newVisible)
-      console.log("after remove ",newVisible[0])
-      // activateTopic(visibleElements[0])
+    console.log("on scroll",event.target.id)
+    if (event && event.target.id && event.isIntersecting) {
+      //activateTopic(event.target.id)
     }
   }
  
@@ -85,7 +72,7 @@ function MainDisplay({active, activateTopic, isDarkMode}) {
   }, [])
 
   useEffect(() => {
-    scrollToElement(active)
+    if(active) scrollToElement(active)
   }, [active])
  
   

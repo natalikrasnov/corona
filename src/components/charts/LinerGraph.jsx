@@ -1,6 +1,6 @@
 import './graph.style.scss'
 
-import { VictoryBar, VictoryChart, VictoryAxis, VictoryTheme, VictoryStack ,VictoryArea, VictoryLabel} from 'victory';
+import { VictoryBar, VictoryChart, VictoryAxis,VictoryScatter,VictoryTooltip, VictoryTheme, VictoryStack ,VictoryArea, VictoryVoronoiContainer} from 'victory';
 
 const myDataset = [
   [
@@ -25,6 +25,7 @@ const myDataset = [
       { x: "e", y: 4 }
   ]
 ]
+const colors = ["rgb(159, 226, 159)", "tomato", "rgb(93, 236, 255)"]
 function VictoryChartLinerFill({dataElements, xTitle, yTitle}) {
  const transformData = (dataset)=> {
     const totals = dataset[0].map((data, i) => {
@@ -39,23 +40,28 @@ function VictoryChartLinerFill({dataElements, xTitle, yTitle}) {
     });
     }
     return (
-         <VictoryChart height={200} width={400}
+      <VictoryChart height={300} width={300}
+              containerComponent={
+          <VictoryVoronoiContainer
+            voronoiDimension="x"
+            labels={({ datum }) => `y: ${datum.y}`}
+            labelComponent={
+              <VictoryTooltip
+                cornerRadius={0}
+                flyoutStyle={{ fill: "#374f60", color: 'white' }}
+              />}
+          />}
         //   theme={VictoryTheme.material}
         >
-        <VictoryStack
-        colorScale={["tomato", "blue", "green"]}
+        <VictoryStack 
+        colorScale={colors}
         >
-        {/* <VictoryArea
-            data={[{x: "a", y: 2}, {x: "b", y: 3}, {x: "c", y: 5}]}
-        />
-        <VictoryArea
-            data={[{x: "a", y: 1}, {x: "b", y: 4}, {x: "c", y: 5}]}
-        />
-        <VictoryArea
-            data={[{x: "a", y: 3}, {x: "b", y: 2}, {x: "c", y: 6}]}
-        /> */}
              {transformData(myDataset).map((data, i) => {
-                return <VictoryArea data={data} key={i}/>;
+               return <VictoryArea
+                 data={data}
+                 key={i} >
+                   </VictoryArea>
+                  
               })}
             </VictoryStack>
              <VictoryAxis dependentAxis
@@ -63,7 +69,16 @@ function VictoryChartLinerFill({dataElements, xTitle, yTitle}) {
              />
              <VictoryAxis
                tickFormat={["a", "b", "c", "d", "e"]}
-             />
+        />
+{transformData(myDataset).map((data, i) => {
+  return <VictoryScatter data={data}
+    labels={null}
+                 key={i}
+                    size={({ active }) => active ? 5 : 3}
+            style={{ data: { fill: colors[i]} }}
+          />
+              })}
+         
         </VictoryChart>
     )
 }

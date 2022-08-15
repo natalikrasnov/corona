@@ -1,5 +1,5 @@
 import './graph.style.scss'
-import { VictoryBar, VictoryChart, VictoryAxis, VictoryTheme, VictoryStack } from 'victory';
+import { VictoryBar, VictoryChart,VictoryTooltip, VictoryAxis, VictoryTheme, VictoryStack, VictoryVoronoiContainer } from 'victory';
 
 const myDataset = [
   [
@@ -24,8 +24,10 @@ const myDataset = [
       { x: "e", y: 4 }
   ]
 ]
+   const colors = ["rgb(159, 226, 159)", "tomato", "rgb(93, 236, 255)", "purple" ]
 
 function FillAllGraph() {
+
   const transformData = (dataset)=> {
     const totals = dataset[0].map((data, i) => {
       return dataset.reduce((memo, curr) => {
@@ -38,10 +40,22 @@ function FillAllGraph() {
       });
     });
     }
+    
   return (
-        <VictoryChart height={200} width={400}
+    <>
+        <VictoryChart height={300} width={300}
           domainPadding={{ x: 20, y: 0 }}
-          theme={VictoryTheme.material}
+      theme={VictoryTheme.material}
+      containerComponent={
+          <VictoryVoronoiContainer
+            voronoiDimension="x"
+            labels={({ datum }) => `y: ${datum.y}`}
+            labelComponent={
+              <VictoryTooltip
+                cornerRadius={0}
+                flyoutStyle={{ fill: "#374f60", color: 'white' }}
+              />}
+          />}
         >
             <VictoryStack
               colorScale={["rgb(159, 226, 159)", "tomato", "rgb(93, 236, 255)"
@@ -65,7 +79,7 @@ function FillAllGraph() {
               tickFormat={["a", "b", "c", "d", "e"]}
             />
         </VictoryChart>
-    );
+   </> );
 }
 
 export default FillAllGraph
